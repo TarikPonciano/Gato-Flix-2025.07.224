@@ -1,7 +1,16 @@
 {%extends "base.html"%}
+{%load bootstrap5%}
 
 {%block title%} Cadastro de Usuário {%endblock%}
 
 {% block content %}
     <h1 style="text-align: center;">Cadastro de Usuário</h1>
+    <div class="container mt-5">
+        <form method="post" action="">
+            {%csrf_token %}
+            {% bootstrap_form form %}
+            <button type="submit" class="btn btn-primary">Cadastrar</button>
+            <button type="reset" class="btn btn-secondary">Limpar</button>
+        </form>
+    </div>
 {%endblock%}
