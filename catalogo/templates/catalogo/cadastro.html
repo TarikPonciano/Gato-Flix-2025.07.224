@@ -6,7 +6,7 @@
 {% block content %}
     <h1 style="text-align: center;">Cadastro de Usuário</h1>
     <div class="container mt-5">
-        <form method="post" action="">
+        <form method="post" action="{% url 'cadastro' %}">
             {%csrf_token %}
             {% bootstrap_form form %}
             <button type="submit" class="btn btn-primary">Cadastrar</button>
