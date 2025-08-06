@@ -4,13 +4,20 @@
 {%block title%} Cadastro de Usuário {%endblock%}
 
 {% block content %}
-    <h1 style="text-align: center;">Cadastro de Usuário</h1>
-    <div class="container mt-5">
-        <form method="post" action="{% url 'cadastro' %}">
-            {%csrf_token %}
-            {% bootstrap_form form %}
-            <button type="submit" class="btn btn-primary">Cadastrar</button>
-            <button type="reset" class="btn btn-secondary">Limpar</button>
-        </form>
-    </div>
+<h1 style="text-align: center;">Cadastro de Usuário</h1>
+<div class="container mt-5">
+    <form method="post" action="{% url 'cadastro' %}">
+        {%csrf_token %}
+        {% bootstrap_form form %}
+        {% if messages%}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {%endfor %}
+        {% endif %}
+        <button type="submit" class="btn btn-primary">Cadastrar</button>
+        <button type="reset" class="btn btn-secondary">Limpar</button>
+    </form>
+</div>
 {%endblock%}
