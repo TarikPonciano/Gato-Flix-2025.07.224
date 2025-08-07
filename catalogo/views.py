@@ -45,3 +45,9 @@ def cadastro(request):
 
     context = {'form': form}
     return render(request, 'catalogo/cadastro.html', context)
+
+def ver_filmes(request):
+    return render(request, 'catalogo/verFilmes.html')
+
+def adicionar_filme(request):
+    return render(request, 'catalogo/adicionarFilme.html')

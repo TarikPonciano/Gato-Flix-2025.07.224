@@ -24,9 +24,9 @@
             {%if user.is_authenticated %}
             <div style="display: flex; gap: 2vw; margin-right: 3vw;">
                 {%if user.perfil.tipo_usuario == 'administrador' %}
-                <a class="btn btn-secondary btn-lg" href=""> Adicionar Filmes</a>
+                <a class="btn btn-secondary btn-lg" href="{%url 'adicionar_filme'%}"> Adicionar Filmes</a>
                 {%endif%}
-                <a class="btn btn-secondary btn-lg" href=""> Ver Filmes</a>
+                <a class="btn btn-secondary btn-lg" href="{%url 'ver_filmes'%}"> Ver Filmes</a>
                 <a class="btn btn-danger btn-lg" href="{% url 'logout' %}">Logout</a>
             </div>
 
