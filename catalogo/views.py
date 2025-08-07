@@ -4,13 +4,26 @@ from django.contrib import messages
 from .forms import CadastroForm
 from django.contrib.auth.models import User
 from .models import Perfil
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import authenticate, login
 
 # Create your views here.
 def home(request):
     return render(request, 'catalogo/home.html')
 
-def login(request):
-    return render(request, 'catalogo/login.html')
+def login_view(request):
+    if request.method != 'POST':
+        form = AuthenticationForm()
+    else:
+        form = AuthenticationForm(data = request.POST)
+        if form.is_valid():
+            user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
+            if user is not None:
+                login(request, user)
+                return redirect('home')
+
+    context = {'form': form}
+    return render(request, 'catalogo/login.html', context)
 
 def cadastro(request):
     if request.method != 'POST':
@@ -24,7 +37,7 @@ def cadastro(request):
                 user.save()
                 perfil.save()
                 messages.success(request, 'Cadastro realizado com sucesso!')
-                return redirect('home')
+                return redirect('login_view')
             else:
                 messages.error(request, 'As senhas não conferem!')
         else:
