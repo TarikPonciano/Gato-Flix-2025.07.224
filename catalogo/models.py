@@ -16,10 +16,9 @@ class Perfil(models.Model):
 
 class Filme(models.Model):
     titulo = models.CharField(max_length=100, null=False)
-    genero = models.CharField(max_length=50, default='Sem Gênero', null=False)
+    genero = models.CharField(max_length=50, choices=[("acao", "Ação"), ("aventura", "Aventura"), ("misterio", "Mistério")], null=False)
     ano_lancamento = models.IntegerField(null=False)
     descricao = models.TextField(max_length=500, default='Sem Descrição')
     diretor = models.CharField(max_length=100, null=False)
-
     def __str__(self):
         return self.titulo

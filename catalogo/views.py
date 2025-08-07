@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
-from .forms import CadastroForm
+from .forms import CadastroForm, FilmeForm
 from django.contrib.auth.models import User
-from .models import Perfil
+from .models import Perfil, Filme
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def home(request):
@@ -46,8 +47,21 @@ def cadastro(request):
     context = {'form': form}
     return render(request, 'catalogo/cadastro.html', context)
 
+@login_required
 def ver_filmes(request):
-    return render(request, 'catalogo/verFilmes.html')
+    filmes = Filme.objects.all()
+    context = {'filmes': filmes}
+    return render(request, 'catalogo/verFilmes.html', context)
 
+@login_required
 def adicionar_filme(request):
-    return render(request, 'catalogo/adicionarFilme.html')
+    if request.method != 'POST':
+        form = FilmeForm()
+    else:
+        form = FilmeForm(request.POST)
+        if form.is_valid() and request.user.perfil.tipo_usuario =="administrador":
+            form.save()
+            redirect('ver_filmes')
+    
+    context = {'form': form}
+    return render(request, 'catalogo/adicionarFilme.html', context)
