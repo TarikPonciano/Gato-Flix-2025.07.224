@@ -61,7 +61,7 @@ def adicionar_filme(request):
         form = FilmeForm(request.POST)
         if form.is_valid() and request.user.perfil.tipo_usuario =="administrador":
             form.save()
-            redirect('ver_filmes')
+            return redirect('ver_filmes')
     
     context = {'form': form}
     return render(request, 'catalogo/adicionarFilme.html', context)
